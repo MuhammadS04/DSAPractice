@@ -33,3 +33,9 @@
 
 class Solution:
     def scoreOfString(self, s: str) -> int:
+        for i in range(len(s) - 1):
+           char = s[i]
+           char2 = s[i+1]
+           print(abs(ord(char2)-ord(char)))
+
+        return 3
