@@ -112,17 +112,34 @@
 # Constraints:
 
 # s and t consist of lowercase English letters.
+# class Solution:
+#     def isAnagram(self, s: str, t: str) -> bool:
+#         if len(s) != len(t):
+#             return False
+#         countedS = {}
+#         countedT = {}
+        
+#         for i in range(len(s)):
+#             countedS[s[i]] = 1 + countedS.get(s[i],0)
+#             countedT[t[i]] = 1 + countedT.get(t[i],0)
+#         return countedS == countedT
+    
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
-        countedS = {}
-        countedT = {}
-        
+
+        count = [0] * 26
         for i in range(len(s)):
-            countedS[s[i]] = 1 + countedS.get(s[i],0)
-            countedT[t[i]] = 1 + countedT.get(t[i],0)
-        return countedS == countedT
+            idx1 = ord(s[i]) - ord('a')
+            idx2 = ord(t[i]) - ord('a')
+            count[idx1] += 1
+            count[idx2] -= 1
+
+        for val in count:
+            if val != 0:
+                return False
+        return True
 
 
     
