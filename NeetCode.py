@@ -1,6 +1,6 @@
 #This file is used to practice neetcode problems 
 
-
+from typing import List
 #===============================================
 # Score of a String
 #===============================================
@@ -124,28 +124,58 @@
 #             countedT[t[i]] = 1 + countedT.get(t[i],0)
 #         return countedS == countedT
     
+# class Solution:
+#     def isAnagram(self, s: str, t: str) -> bool:
+#         if len(s) != len(t):
+#             return False
+
+#         count = [0] * 26
+#         for i in range(len(s)):
+#             idx1 = ord(s[i]) - ord('a')
+#             idx2 = ord(t[i]) - ord('a')
+#             count[idx1] += 1
+#             count[idx2] -= 1
+
+#         for val in count:
+#             if val != 0:
+#                 return False
+#         return True
+
+# ===============================================
+# Two Sum
+# ===============================================
+
+# Given an array of integers nums and an integer target, return the indices i and j such that nums[i] + nums[j] == target and i != j.
+# You may assume that every input has exactly one pair of indices i and j that satisfy the condition.
+# Return the answer with the smaller index first.
+
+
+#two sum problem debuggig.    sorting method , learning enumerate and tuple usage
 class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        A = []
+        for i, val in enumerate(nums):
+            A.append([val, i])
 
-        count = [0] * 26
-        for i in range(len(s)):
-            idx1 = ord(s[i]) - ord('a')
-            idx2 = ord(t[i]) - ord('a')
-            count[idx1] += 1
-            count[idx2] -= 1
+        A = sorted(A)
+        i = 0
+        j = len(A) - 1
 
-        for val in count:
-            if val != 0:
-                return False
-        return True
+        while i < j:
+            currSum = A[i][0] + A[j][0]
 
+            if currSum == target:
+                answer = [min(A[i][1],A[j][1]), max(A[i][1],A[j][1])]
+                return answer
+            elif currSum < target:
+                i += 1
+            else: 
+                j -=1
+        return []     
 
     
 if __name__ == "__main__":
-    s = "racecar"
-    t = "carrace"
+    nums = [-1,-2,-3,-4,-5]
     sol = Solution()
-    print(sol.isAnagram(s,t))
+    print(sol.twoSum(nums, -8))
     exit
