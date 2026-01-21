@@ -1,6 +1,8 @@
 #This file is used to practice neetcode problems 
 
 from typing import List
+from collections import defaultdict
+
 #===============================================
 # Score of a String
 #===============================================
@@ -151,31 +153,83 @@ from typing import List
 
 
 #two sum problem debuggig.    sorting method , learning enumerate and tuple usage
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        A = []
-        for i, val in enumerate(nums):
-            A.append([val, i])
+# class Solution:
+#     def twoSum(self, nums: List[int], target: int) -> List[int]:
+#         A = []
+#         for i, val in enumerate(nums):
+#             A.append([val, i])
 
-        A = sorted(A)
-        i = 0
-        j = len(A) - 1
+#         A = sorted(A)
+#         i = 0
+#         j = len(A) - 1
 
-        while i < j:
-            currSum = A[i][0] + A[j][0]
+#         while i < j:
+#             currSum = A[i][0] + A[j][0]
 
-            if currSum == target:
-                answer = [min(A[i][1],A[j][1]), max(A[i][1],A[j][1])]
-                return answer
-            elif currSum < target:
-                i += 1
-            else: 
-                j -=1
-        return []     
+#             if currSum == target:
+#                 answer = [min(A[i][1],A[j][1]), max(A[i][1],A[j][1])]
+#                 return answer
+#             elif currSum < target:
+#                 i += 1
+#             else: 
+#                 j -=1
+#         return []     
 
+#my answer without looking at the coded solution only the algorithm in english text
+# not quite right missing some edge cases but very close to the actual solution ngl
+
+#correct answer two pass O(n)
+# class Solution1:
+#     def twoSum(self, nums: List[int], target: int) -> List[int]:
+#         d = {} 
+#         for index, val in enumerate(nums):
+#             d[val] = index
+        
+#         #calculate the complement of curr value
+#         for i, val in enumerate(nums):
+#             complement = target - nums[i]
+
+#             if complement in d and d[complement] != i:
+#                 answer = [min(d[complement], i), max(d[complement], i)]
+#                 return answer
+#         return []
+            
+# class Solution2:
+#     def twoSum(self, nums: List[int], target: int) -> List[int]:
+#         d = {}
+#         for i, val in enumerate(nums):
+#             complement = target - nums[i]
+
+#             if complement in d:
+#                 return [d[complement], i]
+#             d[val] = i
+                
     
+#------------------------------
+#Group anagram
+#------------------------------
+# class Solution:
+#     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+#         res = defaultdict(list)
+#         for s in strs:
+#             sortedS = ''.join(sorted(s))
+#             res[sortedS].append(s)
+#         return list(res.values())
+        
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        res = defaultdict(list)
+        for s in strs:
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            res[tuple(count)].append(s)
+        return list(res.values())
+ 
+ 
+
 if __name__ == "__main__":
-    nums = [-1,-2,-3,-4,-5]
+    strs = ["reaa","act","pots","tops","cat","stop","hat"]
     sol = Solution()
-    print(sol.twoSum(nums, -8))
+    print(sol.groupAnagrams(strs))
     exit
