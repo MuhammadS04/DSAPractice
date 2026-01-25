@@ -216,20 +216,37 @@ from collections import defaultdict
 #             res[sortedS].append(s)
 #         return list(res.values())
         
-class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        res = defaultdict(list)
-        for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord('a')] += 1
-            res[tuple(count)].append(s)
-        return list(res.values())
+# class Solution:
+#     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+#         res = defaultdict(list)
+#         for s in strs:
+#             count = [0] * 26
+#             for c in s:
+#                 count[ord(c) - ord('a')] += 1
+#             res[tuple(count)].append(s)
+#         return list(res.values())
  
- 
+class topKSolution1:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = {}
+
+        for i in nums:
+            count[i] = 1 + count.get(i, 0)
+        
+        sorted_count = []
+        for num,freq in count.items():
+            sorted_count.append([freq,num]) #frequency, values
+        sorted_count.sort()
+
+        res = []
+        while len(res) < k:
+            res.append(sorted_count.pop()[1])
+        return res
+
+        
 
 if __name__ == "__main__":
-    strs = ["reaa","act","pots","tops","cat","stop","hat"]
-    sol = Solution()
-    print(sol.groupAnagrams(strs))
+    nums = [1,2,2,2,3,3,3]
+    sol = topKSolution1()
+    print(sol.topKFrequent(nums,2))
     exit
